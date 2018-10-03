@@ -1,0 +1,181 @@
+﻿#########################################################################
+#AI processing for HitlerHasABrain
+#########################################################################
+
+add_namespace = germany_ai
+
+country_event = { #Everyone has arrived, and the result is!
+	id = germany_ai.1
+
+	title = germany_ai.1.t
+	desc = germany_ai.1.d
+	
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		clr_country_flag = GER_AI_Choose_Japan_Flag
+		clr_country_flag = GER_AI_Choose_China_Flag
+		clr_country_flag = GER_AI_Wait_Flag
+		clr_country_flag = GER_AI_War_Flag
+		clr_country_flag = GER_AI_Go_West_FRA_Flag
+		clr_country_flag = GER_AI_Go_West_ENG_Flag
+		clr_country_flag = GER_AI_Go_East_Flag
+	}
+
+	#You know the ugly thing about AI development?
+	#AI developers talk up all their work.
+	#It all boils down to a really complicated if statement...
+	#It just depends on how your logic flows.
+	
+	option = {
+		name = germany_ai.1.a
+		
+		if = { #first things first. Are we at war?
+			limit = {
+				has_war = yes
+			}
+			
+			set_country_flag = GER_AI_War_Flag
+			
+		} #this way we'll do sensible war things and not go picking for another fight
+		
+		if = { #if we're not at war, we should do some strategic thinking
+			limit = {
+				has_war = no
+			}
+			
+			if = { #first things lets see how tough france is
+				limit = { #are they in a faction?
+					FRA = {
+						is_in_faction = no
+					}
+				}
+				
+				#If France has no faction they are obviously easy pickings. We can bully them!
+				set_country_flag = GER_AI_Go_West_FRA_Flag
+				
+				
+				else = { #they are in a faction so lets evaluate the whole faction strength
+					if = {
+						limit = { #this looks a bit backwards, basically we're saying...
+							FRA = { #i'm france
+								all_allied_country = { #this is me and all my allies
+
+									alliance_strength_ratio = { #is germany stronger then us
+										tag = GER 
+										ratio > 1.2 
+									}
+								}
+							}
+						}
+						
+						#Looks like we can beat france, lets bully them
+						set_country_flag = GER_AI_Go_West_FRA_Flag
+						
+					}
+				}
+			}
+			
+			if = { #next lets see how tough england is (or rather, the allies)
+				limit = { #are they in a faction?
+					ENG = {
+						is_in_faction = no
+					}
+				}
+				
+				#If england has no faction they are obviously easy pickings. We can bully them!
+				set_country_flag = GER_AI_Go_West_ENG_Flag
+				
+				
+				else = { #they are in a faction so lets evaluate the whole faction strength
+					if = {
+						limit = { #this looks a bit backwards, basically we're saying...
+							ENG = { #i'm england
+								all_allied_country = { #this is me and all my allies
+
+									alliance_strength_ratio = { #is germany stronger then us
+										tag = GER 
+										ratio > 1.2 
+									}
+								}
+							}
+						}
+						
+						#Looks like we can beat england, lets bully them
+						set_country_flag = GER_AI_Go_West_ENG_Flag
+						
+					}
+				}
+			}
+			
+			
+			if = { #finally we evaluate the soviets
+				limit = { #are they in a faction?
+					SOV = {
+						is_in_faction = no
+					}
+				}
+				
+				#If the soviets have no faction they are obviously easy pickings. We can bully them!
+				set_country_flag = GER_AI_Go_East_Flag
+				
+				
+				else = { #they are in a faction so lets evaluate the whole faction strength
+					if = {
+						limit = { #this looks a bit backwards, basically we're saying...
+							SOV = { #i'm the USSR
+								all_allied_country = { #this is me and all my allies
+
+									alliance_strength_ratio = { #is germany stronger then us
+										tag = GER 
+										ratio > 1.2 
+									}
+								}
+							}
+						}
+						
+						#Looks like we can beat the soviets, lets bully them
+						set_country_flag = GER_AI_Go_East_Flag
+						
+					}
+				}
+			}
+			
+			if = {
+				limit = {
+					NOT = { #we failed all our checks, we're too weak to do much
+						has_country_flag = GER_AI_Go_East_Flag
+						has_country_flag = GER_AI_Go_West_ENG_Flag
+						has_country_flag = GER_AI_Go_West_FRA_Flag
+					}
+				}
+				
+				#Wait, but wait basically means do economic stuff and gather allies,
+				#the battle AI will be building soldiers in the meantime so hey
+				set_country_flag = GER_AI_Wait_Flag
+			}
+			
+			if = { #essentially what we're checking here is to see if japan is stronger than china
+				limit = {
+					JAP = { 
+						all_allied_country = { 
+                    
+							alliance_strength_ratio = { 
+								tag = CHI 
+								ratio > 1.2 
+							}
+						}
+					}
+				}
+				
+				set_country_flag = GER_AI_Choose_Japan_Flag
+				
+				else = {
+					set_country_flag = GER_AI_Choose_China_Flag
+				}
+			}
+			#this bit is a bit off on its own so we do it in a seperate bit of logic
+		}
+	}
+}
