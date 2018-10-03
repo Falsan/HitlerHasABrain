@@ -62,7 +62,7 @@ country_event = { #Everyone has arrived, and the result is!
 							FRA = { #i'm france
 								all_allied_country = { #this is me and all my allies
 
-									alliance_strength_ratio = { #is germany stronger then us
+									strength_ratio = { #is germany stronger then us
 										tag = GER 
 										ratio > 1.2 
 									}
@@ -94,7 +94,7 @@ country_event = { #Everyone has arrived, and the result is!
 							ENG = { #i'm england
 								all_allied_country = { #this is me and all my allies
 
-									alliance_strength_ratio = { #is germany stronger then us
+									strength_ratio = { #is germany stronger then us
 										tag = GER 
 										ratio > 1.2 
 									}
@@ -127,7 +127,7 @@ country_event = { #Everyone has arrived, and the result is!
 							SOV = { #i'm the USSR
 								all_allied_country = { #this is me and all my allies
 
-									alliance_strength_ratio = { #is germany stronger then us
+									strength_ratio = { #is germany stronger then us
 										tag = GER 
 										ratio > 1.2 
 									}
