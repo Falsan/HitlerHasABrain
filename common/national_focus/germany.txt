@@ -3206,8 +3206,18 @@ focus_tree = {
 		relative_position_id = GER_anti_comitern_pact
 		cost = 10
 		ai_will_do = {
-			factor = 2.5	
-		}
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_East_Flag
+				NOT = {
+					OR = {
+						has_country_flag = GER_AI_Go_West_FRA_Flag
+						has_country_flag = GER_AI_Go_West_ENG_Flag
+					}
+				}
+			}
+		}	
 		completion_reward = {
 			hidden_effect = {
 				SOV = { remove_opinion_modifier = { target = ROOT modifier = pact_against_us } }
@@ -3268,28 +3278,16 @@ focus_tree = {
 			has_war_with = SOV
 		}
 		ai_will_do = {
-			factor = 10
+			factor = 1
 			modifier = {
-				factor = 0
-				OR = {
-					has_army_manpower = { size < 1199999 }
-					any_home_area_neighbor_country = {
-						has_war_with = ROOT
+				factor = 100
+				has_country_flag = GER_AI_Go_East_Flag
+				NOT = {
+					OR = {
+						has_country_flag = GER_AI_Go_West_FRA_Flag
+						has_country_flag = GER_AI_Go_West_ENG_Flag
 					}
 				}
-			}
-			modifier = {
-				factor = 0 #AI should not pick this focus if it does not share a border with the Soviets
-				NOT = { 
-					any_home_area_neighbor_country = {
-						tag = SOV
-					}
-				}
-			}
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-				date < 1939.1.1
 			}
 		}	
 		completion_reward = {
@@ -3344,6 +3342,16 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				
+				OR = {
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+					has_country_flag = GER_AI_Go_East_Flag
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+				}
+				
+			}
 		}	
 
 		available_if_capitulated = no
@@ -3433,10 +3441,13 @@ focus_tree = {
 		relative_position_id = GER_rhineland
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
 			modifier = {
-				factor = 0
-				date < 1938.1.1
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+				}
+				
 			}
 		}
 
@@ -3594,12 +3605,15 @@ focus_tree = {
 			86 = { is_owned_by = GER }
 		}
 		ai_will_do = {
-			factor = 10	
+			factor = 1
 			modifier = {
-				factor = 0
-				date < 1939.1.1
+				factor = 100
+				
+				has_country_flag = GER_AI_Go_West_FRA_Flag
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+
 			}
-		}	
+		}
 		completion_reward = {
 			188 = { add_claim_by = GER }
 			85 = { add_claim_by = GER }
@@ -3692,22 +3706,15 @@ focus_tree = {
 		relative_position_id = GER_demand_memel
 		cost = 10
 		ai_will_do = {
-			factor = 10	
+			factor = 1
 			modifier = {
-				factor = 0
-				OR = {
-					date < 1939.1.1
-					any_neighbor_country = {
-						has_war_with = GER
-						NOT = { has_capitulated = yes }
-						strength_ratio = {
-							tag = GER
-							ratio > 0.6
-						}
-					}
-				}
+				factor = 100
+				
+				has_country_flag = GER_AI_Go_West_FRA_Flag
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+
 			}
-		}	
+		}
 		completion_reward = {
 			add_named_threat = { threat = 5 name = GER_danzig_or_war }
 			if = {
@@ -3821,12 +3828,17 @@ focus_tree = {
 		relative_position_id = GER_danzig_or_war
 		cost = 4
 		ai_will_do = {
-			factor = 10	
+			factor = 1
 			modifier = {
-				factor = 0
-				date < 1939.1.1
+				factor = 100
+				
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+				}
+
 			}
-		}	
+		}
 		completion_reward = {
 
 			if = {
@@ -3934,20 +3946,15 @@ focus_tree = {
 		relative_position_id = GER_danzig_or_war
 		cost = 4
 		ai_will_do = {
-			factor = 10			
+			factor = 1
 			modifier = {
-				factor = 0.05
-				date < 1939.1.1
-			}			
-			modifier = {
-				factor = 0.2
-				any_home_area_neighbor_country = {
-					NOT = { tag = FRA }
-					has_war_with = ROOT
-					surrender_progress < 0.5
-				}
+				factor = 100
+				
+				has_country_flag = GER_AI_Go_West_FRA_Flag
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+
 			}
-		}	
+		}
 		completion_reward = {
 			#limit wargoals to when it makes sense to give them. No faction, war or non exist
 			if = { 
@@ -4032,44 +4039,20 @@ focus_tree = {
 		relative_position_id = GER_anschluss
 		cost = 10
 		ai_will_do = {
-			factor = 2.5
+			factor = 1
 			modifier = {
-				factor = 0
-				CZE = {
-					has_opinion = {
-						target = GER
-						value < 0
+				factor = 100
+				
+				has_country_flag = GER_AI_Go_East_Flag
+				NOT = {
+					OR = {
+						has_country_flag = GER_AI_Go_West_ENG_Flag
+						has_country_flag = GER_AI_Go_West_FRA_Flag
 					}
 				}
+
 			}
-			modifier = {
-				factor = 5
-				CZE = {
-					has_opinion = {
-						target = GER
-						value > 20
-					}
-				}
-			}
-			modifier = {
-				factor = 4
-				CZE = {
-					has_completed_focus = CZE_german_leanings
-				}
-			}
-			modifier = {
-				factor = 4
-				CZE = {
-					has_completed_focus = CZE_deliver_sudetenland
-				}
-			}
-			modifier = {
-				factor = 2
-				CZE = {
-					has_completed_focus = CZE_go_right
-				}
-			}
-		}		
+		}
 		completion_reward = {
 			CZE = {
 				add_opinion_modifier = { target = GER modifier = ger_cze_diplomatic_focus }
@@ -4151,8 +4134,15 @@ focus_tree = {
 		relative_position_id = GER_anschluss
 		cost = 10
 		ai_will_do = {
-			factor = 10
-		}	
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+				}
+			}
+		}
 		completion_reward = {
 			if =  {
 				limit = {
@@ -4302,8 +4292,15 @@ focus_tree = {
 		relative_position_id = GER_demand_sudetenland
 		cost = 10
 		ai_will_do = {
-			factor = 10
-		}	
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+				}
+			}
+		}
 		completion_reward = {
 			HUN = {
 				country_event = { id = germany.51 }
@@ -4357,7 +4354,14 @@ focus_tree = {
 		relative_position_id = GER_first_vienna_award
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+				}
+			}
 		}
 
 
@@ -4415,7 +4419,17 @@ focus_tree = {
 		relative_position_id = GER_czech_friend
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+					has_country_flag = GER_AI_Go_East_Flag
+				}
+			}
 		}
 		available = {
 			is_puppet = no
@@ -4508,8 +4522,18 @@ focus_tree = {
 		y = 1
 		relative_position_id = GER_second_vienna_award
 		cost = 10
-		ai_will_do = {
-			factor = 10
+		ai_will_do = { #aww come on, when would you not want italy as an ally? What could go wrong?
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+					has_country_flag = GER_AI_Go_East_Flag
+				}
+			}
 		}
 
 		available_if_capitulated = yes
@@ -4563,8 +4587,18 @@ focus_tree = {
 		relative_position_id = GER_italy_ally
 		cost = 10
 		ai_will_do = {
-			factor = 10
-		}	
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_Go_West_ENG_Flag
+					has_country_flag = GER_AI_Go_West_FRA_Flag
+					has_country_flag = GER_AI_Go_East_Flag
+				}
+			}
+		}
 		completion_reward = {
 			if = {
 				limit = {
@@ -4622,8 +4656,16 @@ focus_tree = {
 		relative_position_id = GER_end_of_czechoslovakia
 		cost = 10
 		ai_will_do = {
-			factor = 0
-		}	
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_Go_East_Flag
+				}
+			}
+		}
 		completion_reward = {
 			POL = {
 				country_event = { id = germany.80 days = 1 }
@@ -4663,8 +4705,16 @@ focus_tree = {
 		relative_position_id = GER_danzig_vs_slovakia
 		cost = 10
 		ai_will_do = {
-			factor = 0
-		}	
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_Go_East_Flag
+				}
+			}
+		}
 		completion_reward = {
 			POL = {
 				add_opinion_modifier = { target = GER modifier = ger_pol_diplomacy_focus }
@@ -4733,12 +4783,14 @@ focus_tree = {
 			}
 		}
 		ai_will_do = {
-			factor = 10			
+			factor = 1
 			modifier = {
-				factor = 0.05
-				date < 1939.1.1
+				factor = 100
+
+				has_country_flag = GER_AI_Go_West_FRA_Flag
+	
 			}
-		}	
+		}
 		completion_reward = {
 			add_named_threat = { threat = 5 name = GER_war_with_france_threat }
  			create_wargoal = {
@@ -4777,7 +4829,14 @@ focus_tree = {
 		relative_position_id = GER_war_with_france
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				
+				has_country_flag = GER_AI_Wait_Flag
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+	
+			}
 		}
 		
 		completion_reward = {
@@ -4834,7 +4893,16 @@ focus_tree = {
 		relative_position_id = GER_war_with_france
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+
+				OR = {
+					has_country_flag = GER_AI_War_Flag
+					has_country_flag = GER_AI_Wait_Flag
+				}
+	
+			}
 		}
 		
 		completion_reward = {
@@ -4876,6 +4944,16 @@ focus_tree = {
 		cost = 5
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+
+				OR = {
+					NOT = { has_country_flag = GER_AI_Go_West_ENG_Flag }
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}
 
 		available_if_capitulated = yes
@@ -4974,6 +5052,16 @@ focus_tree = {
 		cost = 5
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+
+				OR = {
+					NOT = { has_country_flag = GER_AI_Go_West_ENG_Flag }
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}
 
 		available_if_capitulated = yes
@@ -5058,6 +5146,16 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+
+				OR = {
+					NOT = { has_country_flag = GER_AI_Go_West_ENG_Flag }
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}
 
 		available_if_capitulated = yes
@@ -5133,7 +5231,17 @@ focus_tree = {
 		relative_position_id = GER_naval_effort
 		cost = 10
 		ai_will_do = {
-			factor = 0.25
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Choose_China_Flag
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}	
 
 		available_if_capitulated = yes
@@ -5231,7 +5339,17 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
-		}
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Choose_Japan_Flag
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
+		}	
 
 		available_if_capitulated = yes
 
@@ -5301,7 +5419,17 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
-		}
+			modifier = {
+				factor = 100
+				
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
+		}	
 			
 		available_if_capitulated = yes
 
@@ -5383,7 +5511,17 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
-		}	
+			modifier = {
+				factor = 100
+				
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
+		}		
 		completion_reward = {
 			DEN = {
 				add_opinion_modifier = { target = GER modifier = ger_naval_intimidation_focus }
@@ -5454,6 +5592,16 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}	
 		completion_reward = {
 			NOR = {
@@ -5531,6 +5679,16 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}	
 		completion_reward = {
 			HOL = {
@@ -5602,6 +5760,16 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}	
 		completion_reward = {
 			SWE = {
@@ -5694,7 +5862,17 @@ focus_tree = {
 		relative_position_id = GER_anschluss
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				
+				OR = {
+					
+					has_country_flag = GER_AI_Wait_Flag
+					has_country_flag = GER_AI_War_Flag
+				}
+	
+			}
 		}	
 		completion_reward = {
 			remove_ideas = sour_loser
@@ -5749,6 +5927,10 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+			}
 		}	
 		completion_reward = {
 			add_named_threat = { threat = 2 name = GER_demand_slovenia_threat }
@@ -5849,8 +6031,12 @@ focus_tree = {
 		relative_position_id = GER_demand_slovenia
 		cost = 10
 		ai_will_do = {
-			factor = 10
-		}
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+			}
+		}	
 		completion_reward = {
 			if = {
 				limit = {
@@ -6018,7 +6204,11 @@ focus_tree = {
 		relative_position_id = GER_first_ljubljana_award
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+			}
 		}	
 		completion_reward = {
 			country_event = { id = germany.98 }
@@ -6055,8 +6245,12 @@ focus_tree = {
 		relative_position_id = GER_fate_of_yugoslavia
 		cost = 10
 		ai_will_do = {
-			factor = 10
-		}
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+			}
+		}	
 
 		#bypass = {
 		#	OR = {
@@ -6209,7 +6403,11 @@ focus_tree = {
 		relative_position_id = GER_fate_of_yugoslavia
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+			}
 		}	
 		completion_reward = {
 			create_wargoal = {
@@ -6244,7 +6442,11 @@ focus_tree = {
 		relative_position_id = GER_second_ljubljana_award
 		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = GER_AI_Go_West_ENG_Flag
+			}
 		}	
 		completion_reward = {
 			GRE = { country_event = { id = greece.3 hours = 6 } }
